@@ -8,6 +8,7 @@ import android.view.WindowManager;
 
 import com.honhai.foxconn.fxccalendar.R;
 import com.honhai.foxconn.fxccalendar.data.Event;
+import com.honhai.foxconn.fxccalendar.views.CalendarLayout;
 import com.honhai.foxconn.fxccalendar.views.CalendarWeekItem;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import java.util.Calendar;
 public class StartActivity extends AppCompatActivity {
 
     private Calendar calendar = Calendar.getInstance();
+    CalendarLayout calendarLayout;
     private CalendarWeekItem w1, w2, w3, w4, w5;
     private int year = calendar.get(Calendar.YEAR);
     private int month = calendar.get(Calendar.MONTH);
@@ -48,6 +50,11 @@ public class StartActivity extends AppCompatActivity {
     }
 
     private void setDays() {
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+        int weekOfMonth = calendar.get(Calendar.WEEK_OF_MONTH);
         int[][] monthDays = getMonthDays(year, month, dayOfMonth, dayOfWeek, weekOfMonth);
         w1.setMonday(monthDays[0]);
         w2.setMonday(monthDays[1]);
@@ -66,6 +73,13 @@ public class StartActivity extends AppCompatActivity {
         w3.setWeek(3, week + 2);
         w4.setWeek(4, week + 3);
         w5.setWeek(5, week + 4);
+        calendar.set(year,month,dayOfMonth);
+    }
+
+    public void nextMonth(){
+        calendar.add(Calendar.MONTH,1);
+        setDays();
+        calendarLayout.invalidate();
     }
 
     private int[][] getMonthDays(int year, int month, int dayOfMonth, int dayOfWeek, int weekOfMonth) {
@@ -92,6 +106,7 @@ public class StartActivity extends AppCompatActivity {
 
 
     private void findViews() {
+        calendarLayout = findViewById(R.id.calendarLayout);
         w1 = findViewById(R.id.w1);
         w2 = findViewById(R.id.w2);
         w3 = findViewById(R.id.w3);

@@ -8,6 +8,8 @@ import android.support.annotation.LongDef;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 
 import com.honhai.foxconn.fxccalendar.data.Event;
@@ -22,6 +24,7 @@ public class CalendarWeekItem extends View {
     private float dayWidth;
     private float weekHeight;
     private float eventHeight;
+
     private int year;
     private int month;
     private int maxOfMonth;
@@ -36,11 +39,15 @@ public class CalendarWeekItem extends View {
     private float adjPaintEvent;
     private Paint paintBackground = new Paint();
 
+    private GestureDetector gestureDetector;
+    private int press = -1;
+
     public CalendarWeekItem(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
 
         paintBackground.setAntiAlias(true);
         paintEvent.setColor(Color.WHITE);
+        gestureDetector = new GestureDetector(context, new MyGestureListener());
     }
 
     public void setEvents(ArrayList<Event> events) {
@@ -74,22 +81,48 @@ public class CalendarWeekItem extends View {
     }
 
     @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        performClick();
+        return gestureDetector.onTouchEvent(event);
+    }
+
+    @Override
+    public boolean performClick() {
+        return super.performClick();
+    }
+
+    public void refreshPress() {
+        press = -1;
+        invalidate();
+    }
+
+    @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        drawShadow(canvas);
         drawWeek(canvas);
         canvas.translate(0, weekHeight);
         drawEvent(canvas);
+    }
+
+    private void drawShadow(Canvas canvas) {
+        if (press <= 6 && press >= 0) {
+            Paint shadow = new Paint();
+            shadow.setColor(Color.argb(50, 0, 0, 0));
+            shadow.setAntiAlias(true);
+            canvas.drawRect(press * dayWidth, 0,(press + 1) * dayWidth , mHeight, shadow);
+        }
     }
 
     private void drawEvent(Canvas canvas) {
         if (events.size() != 0) {
             for (int i = 0; i < events.size(); i++) {
                 Event event = events.get(i);
-                canvas.save();
                 int start = checkStart(event);
                 int end = checkEnd(event);
                 if (start == -1 || end == -1) continue;
                 paintBackground.setColor(event.color);
+                canvas.save();
                 canvas.drawRoundRect(start * dayWidth, 0, (end + 1) * dayWidth, eventHeight, eventHeight / 5, eventHeight / 5, paintBackground);
                 canvas.drawText(event.context, (start * dayWidth + (end + 1) * dayWidth) / 2, eventHeight / 2 + adjPaintEvent, paintEvent);
                 canvas.restore();
@@ -203,6 +236,31 @@ public class CalendarWeekItem extends View {
             maxOfMonth = 31;
         } else {
             maxOfMonth = 30;
+        }
+    }
+
+    private int checkClickRegion(float x, float y) {
+        return (int) (x / dayWidth);
+    }
+
+    private class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
+
+        @Override
+        public boolean onDoubleTap(MotionEvent e) {
+            Log.d("Seamas", "onDoubleTap");
+            return true;
+        }
+
+        @Override
+        public void onLongPress(MotionEvent e) {
+            Log.d("Seamas", "onLongPress");
+        }
+
+        @Override
+        public boolean onDown(MotionEvent e) {
+            press = checkClickRegion(e.getX(),e.getY());
+            invalidate();
+            return true;
         }
     }
 }
