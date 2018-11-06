@@ -82,6 +82,12 @@ public class StartActivity extends AppCompatActivity {
         calendarLayout.invalidate();
     }
 
+    public void prevMonth(){
+        calendar.add(Calendar.MONTH,-1);
+        setDays();
+        calendarLayout.invalidate();
+    }
+
     private int[][] getMonthDays(int year, int month, int dayOfMonth, int dayOfWeek, int weekOfMonth) {
         int[][] r = new int[5][7];
         for (int i = 0; i < r.length; i++) {

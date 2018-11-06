@@ -6,6 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".activities.StartActivity">
 
-    <include layout="@layout/calendar_pager_item"/>
+    <include layout="@layout/calendar_pager_item" />
 
 </android.support.constraint.ConstraintLayout>

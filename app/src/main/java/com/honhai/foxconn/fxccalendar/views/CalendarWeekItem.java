@@ -239,7 +239,7 @@ public class CalendarWeekItem extends View {
         }
     }
 
-    private int checkClickRegion(float x, float y) {
+    private int checkClickRegion(float x) {
         return (int) (x / dayWidth);
     }
 
@@ -258,7 +258,7 @@ public class CalendarWeekItem extends View {
 
         @Override
         public boolean onDown(MotionEvent e) {
-            press = checkClickRegion(e.getX(),e.getY());
+            press = checkClickRegion(e.getX());
             invalidate();
             return true;
         }
