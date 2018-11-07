@@ -1,31 +1,31 @@
 package com.honhai.foxconn.fxccalendar.activities;
 
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import com.honhai.foxconn.fxccalendar.R;
 import com.honhai.foxconn.fxccalendar.data.Event;
-import com.honhai.foxconn.fxccalendar.views.CalendarLayout;
-import com.honhai.foxconn.fxccalendar.views.CalendarWeekItem;
 import com.honhai.foxconn.fxccalendar.views.pager.Adapter;
 import com.honhai.foxconn.fxccalendar.views.pager.Pager;
+import com.honhai.foxconn.fxccalendar.views.toolbar.BottomBar;
+import com.honhai.foxconn.fxccalendar.views.toolbar.TopBar;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 public class StartActivity extends AppCompatActivity {
 
     private Calendar calendar = Calendar.getInstance();
-    private CalendarLayout calendarLayout;
     private ViewPager viewPager;
-    private CalendarWeekItem w1, w2, w3, w4, w5;
+    private TopBar topBar;
+    private BottomBar bottomBar;
+    private TextView title, subtitle;
     private int year = calendar.get(Calendar.YEAR);
     private int month = calendar.get(Calendar.MONTH);
     private int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
@@ -38,12 +38,92 @@ public class StartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_start);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        viewPager = findViewById(R.id.viewPager);
-        List<Pager> list = new ArrayList<>();
-        list.add(new Pager(this,calendar));
-        list.add(new Pager(this,calendar));
-        list.add(new Pager(this,calendar));
-        viewPager.setAdapter(new Adapter(list));
+        setViewPager();
+        setTopBar();
     }
 
+    private void setTopBar() {
+        topBar = findViewById(R.id.topBar);
+        topBar.setOnClickListener(v -> rollback());
+        title = findViewById(R.id.title);
+        setTitleText();
+    }
+
+    private void setTitleText() {
+        String m = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.UK);
+        title.setText(m + " " + calendar.get(Calendar.YEAR));
+    }
+
+    private void setViewPager() {
+        viewPager = findViewById(R.id.viewPager);
+        viewPager.addOnPageChangeListener(new MySimpleOnPageListener());
+        viewPager.addOnAdapterChangeListener((viewPager, pagerAdapter, pagerAdapter1) -> viewPager.setCurrentItem(1, false));
+        viewPager.setAdapter(getAdapter());
+    }
+
+    private void nextMonth() {
+        calendar.add(Calendar.MONTH, 1);
+        viewPager.setAdapter(getAdapter());
+        setTitleText();
+    }
+
+    private void prevMonth() {
+        calendar.add(Calendar.MONTH, -1);
+        viewPager.setAdapter(getAdapter());
+        setTitleText();
+    }
+
+    private void rollback() {
+        calendar.set(year, month, dayOfMonth);
+        viewPager.setAdapter(getAdapter());
+        setTitleText();
+    }
+
+
+    private Adapter getAdapter() {
+
+        ArrayList<Event> events = new ArrayList<>();
+        events.add(new Event(
+                "E1", 2018, 10, 1, 16, 0,
+                2018, 10, 1, 8, 0, Color.RED
+        ));
+        events.add(new Event(
+                "E2", 2018, 10, 1, 16, 0,
+                2018, 10, 3, 8, 0, Color.YELLOW
+        ));
+        events.add(new Event(
+                "E3", 2018, 10, 2, 16, 0,
+                2018, 10, 4, 8, 0, Color.GRAY
+        ));
+        events.add(new Event(
+                "E4", 2018, 10, 1, 16, 0,
+                2018, 10, 5, 8, 0, Color.GREEN
+        ));
+
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+        List<Pager> list = new ArrayList<>();
+        calendar.add(Calendar.MONTH, -1);
+        list.add(new Pager(this, calendar, events));
+        calendar.set(year, month, dayOfMonth);
+        list.add(new Pager(this, calendar, events));
+        calendar.add(Calendar.MONTH, 1);
+        list.add(new Pager(this, calendar, events));
+        calendar.set(year, month, dayOfMonth);
+        return new Adapter(list);
+    }
+
+    private class MySimpleOnPageListener extends ViewPager.SimpleOnPageChangeListener {
+        @Override
+        public void onPageScrollStateChanged(int state) {
+            if (state == 0) {
+                int cur = viewPager.getCurrentItem();
+                if (cur == 0)
+                    prevMonth();
+                else if (cur == 2)
+                    nextMonth();
+            }
+        }
+    }
 }

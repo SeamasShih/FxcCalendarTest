@@ -13,17 +13,20 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.honhai.foxconn.fxccalendar.R;
+import com.honhai.foxconn.fxccalendar.data.Event;
 import com.honhai.foxconn.fxccalendar.views.CalendarLayout;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class Pager extends ConstraintLayout {
-    public Pager(Context context, Calendar calendar) {
+    public Pager(Context context, Calendar calendar, ArrayList<Event> events) {
         super(context);
         View view = LayoutInflater.from(context).inflate(R.layout.calendar_pager_item, this);
         CalendarLayout layout = view.findViewById(R.id.calendarLayout);
         layout.findViews();
         layout.setDays(calendar);
-        layout.distributeEvent();
+        layout.distributeEvent(events);
     }
 }

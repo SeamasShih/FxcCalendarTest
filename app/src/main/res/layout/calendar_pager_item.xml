@@ -8,12 +8,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <include layout="@layout/calendar_week_bar"
+        android:id="@+id/weekBar"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/w1"/>
+
     <com.honhai.foxconn.fxccalendar.views.CalendarWeekItem
         android:id="@+id/w1"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintVertical_weight="1"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/weekBar"
         app:layout_constraintBottom_toTopOf="@id/w2"/>
 
     <com.honhai.foxconn.fxccalendar.views.CalendarWeekItem

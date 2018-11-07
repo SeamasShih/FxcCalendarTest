@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.support.annotation.LongDef;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -12,6 +11,7 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.honhai.foxconn.fxccalendar.R;
 import com.honhai.foxconn.fxccalendar.data.Event;
 
 import java.util.ArrayList;
@@ -38,9 +38,12 @@ public class CalendarWeekItem extends View {
     private Paint paintEvent = new Paint();
     private float adjPaintEvent;
     private Paint paintBackground = new Paint();
+    private Paint paintLine = new Paint();
 
     private GestureDetector gestureDetector;
     private int press = -1;
+    private int today = -1;
+    private boolean[][] eventSeat = new boolean[7][];
 
     public CalendarWeekItem(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -48,6 +51,10 @@ public class CalendarWeekItem extends View {
         paintBackground.setAntiAlias(true);
         paintEvent.setColor(Color.WHITE);
         gestureDetector = new GestureDetector(context, new MyGestureListener());
+        for (int i = 0; i < eventSeat.length; i++) {
+            eventSeat[i] = new boolean[5];
+        }
+        paintLine.setColor(Color.DKGRAY);
     }
 
     public void setEvents(ArrayList<Event> events) {
@@ -99,10 +106,17 @@ public class CalendarWeekItem extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        drawLine(canvas);
         drawShadow(canvas);
         drawWeek(canvas);
         canvas.translate(0, weekHeight);
         drawEvent(canvas);
+    }
+
+    private void drawLine(Canvas canvas) {
+        canvas.drawLine(0, 0, mWidth, 0, paintLine);
+        if (weekOfMonth == 5)
+            canvas.drawLine(0, mHeight - 1, mWidth, mHeight - 1, paintLine);
     }
 
     private void drawShadow(Canvas canvas) {
@@ -110,21 +124,58 @@ public class CalendarWeekItem extends View {
             Paint shadow = new Paint();
             shadow.setColor(Color.argb(50, 0, 0, 0));
             shadow.setAntiAlias(true);
-            canvas.drawRect(press * dayWidth, 0,(press + 1) * dayWidth , mHeight, shadow);
+            canvas.drawRect(press * dayWidth, 0, (press + 1) * dayWidth, mHeight, shadow);
+        }
+    }
+
+    private void emptyEventSeat() {
+        for (int i = 0; i < eventSeat.length; i++) {
+            for (int j = 0; j < eventSeat[0].length; j++) {
+                eventSeat[i][j] = false;
+            }
+        }
+    }
+
+    private int checkDrawSeatOrder(int start, int end) {
+        int r = -1;
+        for (int j = 0; j < eventSeat[0].length; j++) {
+            boolean available = true;
+            for (int i = start; i <= end; i++) {
+                if (eventSeat[i][j]) {
+                    available = false;
+                    break;
+                }
+            }
+            if (available) {
+                r = j;
+                break;
+            }
+        }
+        return r;
+    }
+
+    private void occupySeat(int start, int end, int order) {
+        for (int i = start; i <= end; i++) {
+            eventSeat[i][order] = true;
         }
     }
 
     private void drawEvent(Canvas canvas) {
         if (events.size() != 0) {
+            emptyEventSeat();
             for (int i = 0; i < events.size(); i++) {
                 Event event = events.get(i);
                 int start = checkStart(event);
                 int end = checkEnd(event);
                 if (start == -1 || end == -1) continue;
+                int order = checkDrawSeatOrder(start, end);
+                if (order == -1) continue;
+                occupySeat(start, end, order);
                 paintBackground.setColor(event.color);
                 canvas.save();
-                canvas.drawRoundRect(start * dayWidth, 0, (end + 1) * dayWidth, eventHeight, eventHeight / 5, eventHeight / 5, paintBackground);
-                canvas.drawText(event.context, (start * dayWidth + (end + 1) * dayWidth) / 2, eventHeight / 2 + adjPaintEvent, paintEvent);
+                canvas.translate(0, eventHeight * order / 10);
+                canvas.drawRoundRect(start * dayWidth + 5, order * eventHeight, (end + 1) * dayWidth - 5, (order + 1) * eventHeight, eventHeight / 5, eventHeight / 5, paintBackground);
+                canvas.drawText(event.context, (start * dayWidth + (end + 1) * dayWidth) / 2, order * eventHeight + eventHeight / 2 + adjPaintEvent, paintEvent);
                 canvas.restore();
             }
         }
@@ -182,35 +233,55 @@ public class CalendarWeekItem extends View {
             return startWeekday - 1;
     }
 
+    public void setToday(int today) {
+        if (today >= 0 && today <= 6)
+            this.today = today;
+        else
+            today = -1;
+    }
+
     private void drawWeek(Canvas canvas) {
         canvas.save();
         for (int i = 0; i < 7; i++) {
-            int colorInMonth = Color.BLACK;
-            int colorOutMonth = Color.GRAY;
+            if (i == 5)
+                paintWeek.setColor(getResources().getColor(R.color.Saturday));
+            else if (i == 6)
+                paintWeek.setColor(getResources().getColor(R.color.Sunday));
+            else
+                paintWeek.setColor(getResources().getColor(R.color.Weekday));
             switch (weekOfMonth) {
                 case 1:
-                    paintWeek.setColor(colorOutMonth);
+                    paintWeek.setAlpha(100);
                     if (weekdays[i] < 10)
-                        paintWeek.setColor(colorInMonth);
-                    canvas.drawText(String.valueOf(weekdays[i]), dayWidth / 2, weekHeight / 2 + adjPaintWeek, paintWeek);
+                        paintWeek.setAlpha(255);
+                    drawDayText(canvas, i);
                     canvas.translate(dayWidth, 0);
                     break;
                 case 5:
-                    paintWeek.setColor(colorInMonth);
+                    paintWeek.setAlpha(255);
                     if (weekdays[i] < 10)
-                        paintWeek.setColor(colorOutMonth);
-                    canvas.drawText(String.valueOf(weekdays[i]), dayWidth / 2, weekHeight / 2 + adjPaintWeek, paintWeek);
+                        paintWeek.setAlpha(100);
+                    drawDayText(canvas, i);
                     canvas.translate(dayWidth, 0);
                     break;
                 default:
-                    paintWeek.setColor(colorInMonth);
-                    canvas.drawText(String.valueOf(weekdays[i]), dayWidth / 2, weekHeight / 2 + adjPaintWeek, paintWeek);
+                    paintWeek.setAlpha(255);
+                    drawDayText(canvas, i);
                     canvas.translate(dayWidth, 0);
                     break;
             }
 
         }
         canvas.restore();
+    }
+
+    private void drawDayText(Canvas canvas, int i) {
+        if (i == today) {
+            Paint paint = new Paint();
+            paint.setColor(Color.rgb(50, 84, 186));
+            canvas.drawRect(0, 0, dayWidth, weekHeight, paint);
+        }
+        canvas.drawText(String.valueOf(weekdays[i]), dayWidth / 2, weekHeight / 2 + adjPaintWeek, paintWeek);
     }
 
     public void setWeek(int weekOfMonth, int weekOfYear) {
