@@ -6,4 +6,5 @@
     <color name="Saturday">#0048ff</color>
     <color name="Sunday">#ff0000</color>
     <color name="Weekday">#ff000000</color>
+    <color name="themeColor">#0000ff</color>
 </resources>

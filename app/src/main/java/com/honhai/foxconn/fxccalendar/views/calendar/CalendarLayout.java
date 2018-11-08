@@ -1,16 +1,10 @@
-package com.honhai.foxconn.fxccalendar.views;
+package com.honhai.foxconn.fxccalendar.views.calendar;
 
-import android.animation.ValueAnimator;
 import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Color;
 import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
-import android.view.animation.LinearInterpolator;
-import android.widget.RelativeLayout;
 
 import com.honhai.foxconn.fxccalendar.R;
 import com.honhai.foxconn.fxccalendar.activities.StartActivity;

@@ -1,4 +1,4 @@
-package com.honhai.foxconn.fxccalendar.views.pager;
+package com.honhai.foxconn.fxccalendar.views.calendar.pager;
 
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;

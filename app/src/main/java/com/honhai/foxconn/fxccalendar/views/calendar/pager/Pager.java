@@ -1,24 +1,16 @@
-package com.honhai.foxconn.fxccalendar.views.pager;
+package com.honhai.foxconn.fxccalendar.views.calendar.pager;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
-import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.honhai.foxconn.fxccalendar.R;
 import com.honhai.foxconn.fxccalendar.data.Event;
-import com.honhai.foxconn.fxccalendar.views.CalendarLayout;
+import com.honhai.foxconn.fxccalendar.views.calendar.CalendarLayout;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 public class Pager extends ConstraintLayout {
     public Pager(Context context, Calendar calendar, ArrayList<Event> events) {

@@ -1,6 +1,7 @@
-package com.honhai.foxconn.fxccalendar.views;
+package com.honhai.foxconn.fxccalendar.views.calendar;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -12,6 +13,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.honhai.foxconn.fxccalendar.R;
+import com.honhai.foxconn.fxccalendar.activities.AddEventActivity;
 import com.honhai.foxconn.fxccalendar.data.Event;
 
 import java.util.ArrayList;
@@ -45,6 +47,8 @@ public class CalendarWeekItem extends View {
     private int today = -1;
     private boolean[][] eventSeat = new boolean[7][];
 
+    private Context context;
+
     public CalendarWeekItem(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
 
@@ -52,9 +56,11 @@ public class CalendarWeekItem extends View {
         paintEvent.setColor(Color.WHITE);
         gestureDetector = new GestureDetector(context, new MyGestureListener());
         for (int i = 0; i < eventSeat.length; i++) {
-            eventSeat[i] = new boolean[5];
+            eventSeat[i] = new boolean[4];
         }
         paintLine.setColor(Color.DKGRAY);
+
+        this.context = context;
     }
 
     public void setEvents(ArrayList<Event> events) {
@@ -173,7 +179,7 @@ public class CalendarWeekItem extends View {
                 occupySeat(start, end, order);
                 paintBackground.setColor(event.color);
                 canvas.save();
-                canvas.translate(0, eventHeight * order / 10);
+                canvas.translate(0, eventHeight * (order+1) / 10);
                 canvas.drawRoundRect(start * dayWidth + 5, order * eventHeight, (end + 1) * dayWidth - 5, (order + 1) * eventHeight, eventHeight / 5, eventHeight / 5, paintBackground);
                 canvas.drawText(event.context, (start * dayWidth + (end + 1) * dayWidth) / 2, order * eventHeight + eventHeight / 2 + adjPaintEvent, paintEvent);
                 canvas.restore();
@@ -323,8 +329,15 @@ public class CalendarWeekItem extends View {
         }
 
         @Override
+        public void onShowPress(MotionEvent e) {
+            Log.d("Seamas", "onShowPress");
+        }
+
+        @Override
         public void onLongPress(MotionEvent e) {
-            Log.d("Seamas", "onLongPress");
+            Intent intent = new Intent();
+            intent.setClass(context,AddEventActivity.class);
+            context.startActivity(intent);
         }
 
         @Override

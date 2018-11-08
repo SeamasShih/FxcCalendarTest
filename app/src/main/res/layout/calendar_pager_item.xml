@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.honhai.foxconn.fxccalendar.views.CalendarLayout
+<com.honhai.foxconn.fxccalendar.views.calendar.CalendarLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -15,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/w1"/>
 
-    <com.honhai.foxconn.fxccalendar.views.CalendarWeekItem
+    <com.honhai.foxconn.fxccalendar.views.calendar.CalendarWeekItem
         android:id="@+id/w1"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -23,7 +23,7 @@
         app:layout_constraintTop_toBottomOf="@id/weekBar"
         app:layout_constraintBottom_toTopOf="@id/w2"/>
 
-    <com.honhai.foxconn.fxccalendar.views.CalendarWeekItem
+    <com.honhai.foxconn.fxccalendar.views.calendar.CalendarWeekItem
         android:id="@+id/w2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -31,7 +31,7 @@
         app:layout_constraintTop_toBottomOf="@id/w1"
         app:layout_constraintBottom_toTopOf="@id/w3"/>
 
-    <com.honhai.foxconn.fxccalendar.views.CalendarWeekItem
+    <com.honhai.foxconn.fxccalendar.views.calendar.CalendarWeekItem
         android:id="@+id/w3"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -39,7 +39,7 @@
         app:layout_constraintTop_toBottomOf="@id/w2"
         app:layout_constraintBottom_toTopOf="@id/w4"/>
 
-    <com.honhai.foxconn.fxccalendar.views.CalendarWeekItem
+    <com.honhai.foxconn.fxccalendar.views.calendar.CalendarWeekItem
         android:id="@+id/w4"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -47,7 +47,7 @@
         app:layout_constraintTop_toBottomOf="@id/w3"
         app:layout_constraintBottom_toTopOf="@id/w5"/>
 
-    <com.honhai.foxconn.fxccalendar.views.CalendarWeekItem
+    <com.honhai.foxconn.fxccalendar.views.calendar.CalendarWeekItem
         android:id="@+id/w5"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -55,4 +55,4 @@
         app:layout_constraintTop_toBottomOf="@id/w4"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
-</com.honhai.foxconn.fxccalendar.views.CalendarLayout>
+</com.honhai.foxconn.fxccalendar.views.calendar.CalendarLayout>

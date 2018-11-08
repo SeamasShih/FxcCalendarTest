@@ -8,11 +8,14 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.honhai.foxconn.fxccalendar.R;
+import com.honhai.foxconn.fxccalendar.data.Data;
 import com.honhai.foxconn.fxccalendar.data.Event;
-import com.honhai.foxconn.fxccalendar.views.pager.Adapter;
-import com.honhai.foxconn.fxccalendar.views.pager.Pager;
-import com.honhai.foxconn.fxccalendar.views.toolbar.BottomBar;
-import com.honhai.foxconn.fxccalendar.views.toolbar.TopBar;
+import com.honhai.foxconn.fxccalendar.views.calendar.toolbar.BottomBar;
+import com.honhai.foxconn.fxccalendar.views.calendar.toolbar.TopBar;
+import com.honhai.foxconn.fxccalendar.views.calendar.pager.Adapter;
+import com.honhai.foxconn.fxccalendar.views.calendar.pager.Pager;
+import com.honhai.foxconn.fxccalendar.views.calendar.toolbar.BottomBar;
+import com.honhai.foxconn.fxccalendar.views.calendar.toolbar.TopBar;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -22,6 +25,7 @@ import java.util.Locale;
 public class StartActivity extends AppCompatActivity {
 
     private Calendar calendar = Calendar.getInstance();
+    private Data data = Data.getInstnace();
     private ViewPager viewPager;
     private TopBar topBar;
     private BottomBar bottomBar;
@@ -82,22 +86,36 @@ public class StartActivity extends AppCompatActivity {
 
     private Adapter getAdapter() {
 
-        ArrayList<Event> events = new ArrayList<>();
-        events.add(new Event(
+        data.events.add(new Event(
                 "E1", 2018, 10, 1, 16, 0,
                 2018, 10, 1, 8, 0, Color.RED
         ));
-        events.add(new Event(
+        data.events.add(new Event(
                 "E2", 2018, 10, 1, 16, 0,
                 2018, 10, 3, 8, 0, Color.YELLOW
         ));
-        events.add(new Event(
+        data.events.add(new Event(
                 "E3", 2018, 10, 2, 16, 0,
-                2018, 10, 4, 8, 0, Color.GRAY
+                2018, 10, 8, 8, 0, Color.GRAY
         ));
-        events.add(new Event(
+
+        data.events.add(new Event(
                 "E4", 2018, 10, 1, 16, 0,
                 2018, 10, 5, 8, 0, Color.GREEN
+        ));
+        data.events.add(new Event(
+                "E5", 2018, 10, 1, 16, 0,
+                2018, 10, 5, 8, 0, Color.BLUE
+        ));
+
+        data.events.add(new Event(
+                "E6", 2018, 10, 1, 16, 0,
+                2018, 10, 5, 8, 0, Color.DKGRAY
+        ));
+
+        data.events.add(new Event(
+                "E7", 2018, 10, 1, 16, 0,
+                2018, 10, 5, 8, 0, Color.LTGRAY
         ));
 
         int year = calendar.get(Calendar.YEAR);
@@ -105,11 +123,11 @@ public class StartActivity extends AppCompatActivity {
         int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
         List<Pager> list = new ArrayList<>();
         calendar.add(Calendar.MONTH, -1);
-        list.add(new Pager(this, calendar, events));
+        list.add(new Pager(this, calendar, data.events));
         calendar.set(year, month, dayOfMonth);
-        list.add(new Pager(this, calendar, events));
+        list.add(new Pager(this, calendar, data.events));
         calendar.add(Calendar.MONTH, 1);
-        list.add(new Pager(this, calendar, events));
+        list.add(new Pager(this, calendar, data.events));
         calendar.set(year, month, dayOfMonth);
         return new Adapter(list);
     }

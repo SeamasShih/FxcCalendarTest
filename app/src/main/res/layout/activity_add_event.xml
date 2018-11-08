@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.AddEventActivity">
+
+    <com.honhai.foxconn.fxccalendar.views.add.Toolbar
+        android:id="@+id/tool"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintBottom_toTopOf="@id/edit"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/edit"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:text="123"
+        app:layout_constraintBottom_toTopOf="@id/image"
+        app:layout_constraintTop_toBottomOf="@id/tool"
+        app:layout_constraintVertical_weight="1"/>
+
+    <TextView
+        android:id="@+id/startWMDY"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/startHM"
+        app:layout_constraintHorizontal_weight="3"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/image"
+        app:layout_constraintTop_toTopOf="@id/image"
+        app:layout_constraintVertical_weight="1" />
+
+    <TextView
+        android:id="@+id/startHM"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/recycler"
+        app:layout_constraintLeft_toLeftOf="@+id/startWMDY"
+        app:layout_constraintRight_toRightOf="@id/startWMDY"
+        app:layout_constraintTop_toBottomOf="@id/startWMDY"
+        app:layout_constraintVertical_weight="1" />
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/recycler"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintLeft_toRightOf="@id/startWMDY"
+        app:layout_constraintRight_toLeftOf="@id/endWMDY"
+        app:layout_constraintTop_toBottomOf="@id/edit"
+        app:layout_constraintVertical_weight="1"/>
+
+    <TextView
+        android:id="@+id/endWMDY"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/endHM"
+        app:layout_constraintHorizontal_weight="3"
+        app:layout_constraintLeft_toRightOf="@id/image"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/image"
+        app:layout_constraintVertical_weight="1" />
+
+    <TextView
+        android:id="@+id/endHM"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/recycler"
+        app:layout_constraintLeft_toLeftOf="@+id/endWMDY"
+        app:layout_constraintRight_toRightOf="@id/endWMDY"
+        app:layout_constraintTop_toBottomOf="@id/endWMDY"
+        app:layout_constraintVertical_weight="1" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/image"
+        app:layout_constraintVertical_weight="5"/>
+
+</android.support.constraint.ConstraintLayout>

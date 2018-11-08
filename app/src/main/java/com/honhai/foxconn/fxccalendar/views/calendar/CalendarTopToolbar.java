@@ -1,4 +1,4 @@
-package com.honhai.foxconn.fxccalendar.views;
+package com.honhai.foxconn.fxccalendar.views.calendar;
 
 import android.content.Context;
 import android.util.AttributeSet;
