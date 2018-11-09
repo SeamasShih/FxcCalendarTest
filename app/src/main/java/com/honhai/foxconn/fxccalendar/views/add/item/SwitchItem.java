@@ -1,20 +1,18 @@
-package com.honhai.foxconn.fxccalendar.views.add;
+package com.honhai.foxconn.fxccalendar.views.add.item;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
-import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
 import android.widget.ImageView;
-import android.widget.Switch;
 
 import com.honhai.foxconn.fxccalendar.R;
 
-public class ChoiceItem extends ConstraintLayout {
+public class SwitchItem extends SampleView {
 
     private ImageView imageView;
     private MySwitch mSwitch;
 
-    public ChoiceItem(Context context, AttributeSet attrs) {
+    public SwitchItem(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
@@ -24,7 +22,7 @@ public class ChoiceItem extends ConstraintLayout {
         mSwitch.setEventColor(color);
     }
 
-    private void findViews() {
+    public void findViews() {
         if (imageView == null)
             imageView = findViewById(R.id.image);
         if (mSwitch == null)

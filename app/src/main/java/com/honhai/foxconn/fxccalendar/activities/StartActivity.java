@@ -14,8 +14,6 @@ import com.honhai.foxconn.fxccalendar.views.calendar.toolbar.BottomBar;
 import com.honhai.foxconn.fxccalendar.views.calendar.toolbar.TopBar;
 import com.honhai.foxconn.fxccalendar.views.calendar.pager.Adapter;
 import com.honhai.foxconn.fxccalendar.views.calendar.pager.Pager;
-import com.honhai.foxconn.fxccalendar.views.calendar.toolbar.BottomBar;
-import com.honhai.foxconn.fxccalendar.views.calendar.toolbar.TopBar;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -25,7 +23,7 @@ import java.util.Locale;
 public class StartActivity extends AppCompatActivity {
 
     private Calendar calendar = Calendar.getInstance();
-    private Data data = Data.getInstnace();
+    private Data data = Data.getInstance();
     private ViewPager viewPager;
     private TopBar topBar;
     private BottomBar bottomBar;
@@ -44,6 +42,12 @@ public class StartActivity extends AppCompatActivity {
 
         setViewPager();
         setTopBar();
+    }
+
+    @Override
+    protected void onResume() {
+        title.setTextColor(Data.getInstance().themeColor);
+        super.onResume();
     }
 
     private void setTopBar() {
@@ -85,38 +89,6 @@ public class StartActivity extends AppCompatActivity {
 
 
     private Adapter getAdapter() {
-
-        data.events.add(new Event(
-                "E1", 2018, 10, 1, 16, 0,
-                2018, 10, 1, 8, 0, Color.RED
-        ));
-        data.events.add(new Event(
-                "E2", 2018, 10, 1, 16, 0,
-                2018, 10, 3, 8, 0, Color.YELLOW
-        ));
-        data.events.add(new Event(
-                "E3", 2018, 10, 2, 16, 0,
-                2018, 10, 8, 8, 0, Color.GRAY
-        ));
-
-        data.events.add(new Event(
-                "E4", 2018, 10, 1, 16, 0,
-                2018, 10, 5, 8, 0, Color.GREEN
-        ));
-        data.events.add(new Event(
-                "E5", 2018, 10, 1, 16, 0,
-                2018, 10, 5, 8, 0, Color.BLUE
-        ));
-
-        data.events.add(new Event(
-                "E6", 2018, 10, 1, 16, 0,
-                2018, 10, 5, 8, 0, Color.DKGRAY
-        ));
-
-        data.events.add(new Event(
-                "E7", 2018, 10, 1, 16, 0,
-                2018, 10, 5, 8, 0, Color.LTGRAY
-        ));
 
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);

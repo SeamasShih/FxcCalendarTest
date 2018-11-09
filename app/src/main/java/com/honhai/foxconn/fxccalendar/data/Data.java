@@ -13,7 +13,7 @@ public class Data {
 
     private Data(){}
 
-    public static Data getInstnace(){
+    public static Data getInstance(){
         return instance;
     }
 

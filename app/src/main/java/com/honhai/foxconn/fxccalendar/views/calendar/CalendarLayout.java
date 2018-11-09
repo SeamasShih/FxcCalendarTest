@@ -29,14 +29,6 @@ public class CalendarLayout extends ConstraintLayout {
 
     }
 
-    public void distributeEvent(ArrayList<Event> events) {
-        w1.setEvents(events);
-        w2.setEvents(events);
-        w3.setEvents(events);
-        w4.setEvents(events);
-        w5.setEvents(events);
-    }
-
     public void findViews(){
         w1 = findViewById(R.id.w1);
         w2 = findViewById(R.id.w2);

@@ -19,6 +19,5 @@ public class Pager extends ConstraintLayout {
         CalendarLayout layout = view.findViewById(R.id.calendarLayout);
         layout.findViews();
         layout.setDays(calendar);
-        layout.distributeEvent(events);
     }
 }

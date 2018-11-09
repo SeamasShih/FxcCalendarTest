@@ -14,6 +14,7 @@ import android.view.View;
 
 import com.honhai.foxconn.fxccalendar.R;
 import com.honhai.foxconn.fxccalendar.activities.AddEventActivity;
+import com.honhai.foxconn.fxccalendar.data.Data;
 import com.honhai.foxconn.fxccalendar.data.Event;
 
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ public class CalendarWeekItem extends View {
     private int weekOfMonth;
     private int weekOfYear;
     private int[] weekdays = new int[7];
-    private ArrayList<Event> events = new ArrayList<>();
+    private ArrayList<Event> events = Data.getInstance().events;
 
     private Paint paintWeek = new Paint();
     private float adjPaintWeek;
@@ -61,10 +62,6 @@ public class CalendarWeekItem extends View {
         paintLine.setColor(Color.DKGRAY);
 
         this.context = context;
-    }
-
-    public void setEvents(ArrayList<Event> events) {
-        this.events = events;
     }
 
     public void addEvents(Event event) {
@@ -179,7 +176,7 @@ public class CalendarWeekItem extends View {
                 occupySeat(start, end, order);
                 paintBackground.setColor(event.color);
                 canvas.save();
-                canvas.translate(0, eventHeight * (order+1) / 10);
+                canvas.translate(0, eventHeight * (order + 1) / 10);
                 canvas.drawRoundRect(start * dayWidth + 5, order * eventHeight, (end + 1) * dayWidth - 5, (order + 1) * eventHeight, eventHeight / 5, eventHeight / 5, paintBackground);
                 canvas.drawText(event.context, (start * dayWidth + (end + 1) * dayWidth) / 2, order * eventHeight + eventHeight / 2 + adjPaintEvent, paintEvent);
                 canvas.restore();
@@ -284,7 +281,7 @@ public class CalendarWeekItem extends View {
     private void drawDayText(Canvas canvas, int i) {
         if (i == today) {
             Paint paint = new Paint();
-            paint.setColor(Color.rgb(50, 84, 186));
+            paint.setColor(Data.getInstance().themeColor);
             canvas.drawRect(0, 0, dayWidth, weekHeight, paint);
         }
         canvas.drawText(String.valueOf(weekdays[i]), dayWidth / 2, weekHeight / 2 + adjPaintWeek, paintWeek);
@@ -316,6 +313,25 @@ public class CalendarWeekItem extends View {
         }
     }
 
+    private int[] getDayInfo(int day) {
+        int year = this.year;
+        int month = this.month;
+        Calendar calendar = Calendar.getInstance();
+        if (weekOfMonth == 1 && day > 10)
+            calendar.set(year, month - 1, weekdays[day]);
+        else if (weekOfMonth == 5 && day < 10)
+            calendar.set(year, month + 1, weekdays[day]);
+        else
+            calendar.set(year, month, weekdays[day]);
+        year = calendar.get(Calendar.YEAR);
+        month = calendar.get(Calendar.MONTH);
+        int weekOfMonth = calendar.get(Calendar.WEEK_OF_MONTH);
+        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+        return new int[]{year, month, weekOfMonth, dayOfMonth, hour, minute};
+    }
+
     private int checkClickRegion(float x) {
         return (int) (x / dayWidth);
     }
@@ -336,7 +352,9 @@ public class CalendarWeekItem extends View {
         @Override
         public void onLongPress(MotionEvent e) {
             Intent intent = new Intent();
-            intent.setClass(context,AddEventActivity.class);
+            int[] dayInfo = getDayInfo(press);
+            intent.putExtra("dayInfo", dayInfo);
+            intent.setClass(context, AddEventActivity.class);
             context.startActivity(intent);
         }
 

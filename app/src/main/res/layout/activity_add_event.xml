@@ -17,15 +17,26 @@
         android:id="@+id/edit"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:text="123"
-        app:layout_constraintBottom_toTopOf="@id/image"
-        app:layout_constraintTop_toBottomOf="@id/tool"
-        app:layout_constraintVertical_weight="1"/>
+        android:background="@android:color/transparent"
+        android:cursorVisible="false"
+        android:gravity="center"
+        android:hint="Event"
+        android:singleLine="true"
+        app:layout_constraintBottom_toTopOf="@id/lineBottomEdit"
+        app:layout_constraintTop_toBottomOf="@id/tool" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/lineBottomEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="100dp" />
 
     <TextView
         android:id="@+id/startWMDY"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:gravity="center"
         app:layout_constraintBottom_toTopOf="@id/startHM"
         app:layout_constraintHorizontal_weight="3"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -37,7 +48,8 @@
         android:id="@+id/startHM"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/recycler"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@id/image"
         app:layout_constraintLeft_toLeftOf="@+id/startWMDY"
         app:layout_constraintRight_toRightOf="@id/startWMDY"
         app:layout_constraintTop_toBottomOf="@id/startWMDY"
@@ -47,17 +59,17 @@
         android:id="@+id/image"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/recycler"
+        app:layout_constraintBottom_toBottomOf="@id/lineBottomTime"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintLeft_toRightOf="@id/startWMDY"
         app:layout_constraintRight_toLeftOf="@id/endWMDY"
-        app:layout_constraintTop_toBottomOf="@id/edit"
-        app:layout_constraintVertical_weight="1"/>
+        app:layout_constraintTop_toBottomOf="@id/lineBottomEdit" />
 
     <TextView
         android:id="@+id/endWMDY"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:gravity="center"
         app:layout_constraintBottom_toTopOf="@id/endHM"
         app:layout_constraintHorizontal_weight="3"
         app:layout_constraintLeft_toRightOf="@id/image"
@@ -69,18 +81,30 @@
         android:id="@+id/endHM"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/recycler"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@id/image"
         app:layout_constraintLeft_toLeftOf="@+id/endWMDY"
         app:layout_constraintRight_toRightOf="@id/endWMDY"
         app:layout_constraintTop_toBottomOf="@id/endWMDY"
         app:layout_constraintVertical_weight="1" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler"
+    <android.support.constraint.Guideline
+        android:id="@+id/lineBottomTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="181dp" />
+
+    <ScrollView
+        android:id="@+id/scroller"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/image"
-        app:layout_constraintVertical_weight="5"/>
+        app:layout_constraintTop_toBottomOf="@id/lineBottomTime"
+        app:layout_constraintVertical_weight="5">
+
+        <include layout="@layout/add_event_color_item"/>
+
+    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>
