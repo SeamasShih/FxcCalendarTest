@@ -19,6 +19,7 @@
         android:id="@+id/colorText"
         android:layout_width="0dp"
         android:layout_height="match_parent"
+        android:paddingStart="20dp"
         android:text="color"
         android:gravity="center_vertical"
         app:layout_constraintLeft_toRightOf="@id/colorImage"

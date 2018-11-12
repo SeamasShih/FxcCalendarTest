@@ -1,4 +1,4 @@
-package com.honhai.foxconn.fxccalendar.views.add.item;
+package com.honhai.foxconn.fxccalendar.views.add.item.switcher;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.widget.ImageView;
 
 import com.honhai.foxconn.fxccalendar.R;
+import com.honhai.foxconn.fxccalendar.views.add.item.SampleView;
 
 public class SwitchItem extends SampleView {
 

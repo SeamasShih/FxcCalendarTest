@@ -1,10 +1,15 @@
 package com.honhai.foxconn.fxccalendar.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -40,10 +45,11 @@ public class AddEventActivity extends AppCompatActivity {
 
         findViews();
         setDayText();
-        setColor();
         setToolbar();
+        setColor();
     }
 
+    @SuppressLint("NewApi")
     private void setToolbar() {
         toolbar.inflateMenu(R.menu.add_event_toolbar_widget);
     }
@@ -52,6 +58,7 @@ public class AddEventActivity extends AppCompatActivity {
         int color = Data.getInstance().themeColor;
         editText.setHintTextColor(Color.argb(100, Color.red(color), Color.green(color), Color.blue(color)));
         editText.setTextColor(color);
+        toolbar.getMenu().getItem(0).setIconTintList(ColorStateList.valueOf(color));
     }
 
     private void setDayText() {

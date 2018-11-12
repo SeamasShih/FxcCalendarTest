@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/eventItemHeight"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.honhai.foxconn.fxccalendar.views.add.popup.widget.ColorPreviewBar
+        android:id="@+id/color"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:scaleType="center"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <TextView
+        android:id="@+id/label"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:text="color"
+        android:gravity="center_vertical"
+        app:layout_constraintLeft_toRightOf="@id/color"
+        app:layout_constraintRight_toLeftOf="@id/choice"/>
+
+    <com.honhai.foxconn.fxccalendar.views.add.popup.widget.ColorChoiceDot
+        android:id="@+id/choice"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+</android.support.constraint.ConstraintLayout>

@@ -7,4 +7,17 @@
     <color name="Sunday">#ff0000</color>
     <color name="Weekday">#ff000000</color>
     <color name="themeColor">#0000ff</color>
+
+    <array name="eventColorArray">
+        <item>#ff0000</item>
+        <item>#ff9900</item>
+        <item>#b1ae11</item>
+        <item>#07ce00</item>
+        <item>#147fbe</item>
+        <item>#0f30d2</item>
+        <item>#5d00ff</item>
+        <item>#9b0db7</item>
+        <item>#000000</item>
+        <item>#805021</item>
+    </array>
 </resources>

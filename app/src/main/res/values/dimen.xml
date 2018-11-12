@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="eventItemHeight">60dp</dimen>
+    <dimen name="eventItemHeight">50dp</dimen>
+    <dimen name="popupWindowWidth">300dp</dimen>
 </resources>

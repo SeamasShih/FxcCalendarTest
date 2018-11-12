@@ -1,4 +1,4 @@
-package com.honhai.foxconn.fxccalendar.views.add.item;
+package com.honhai.foxconn.fxccalendar.views.add.item.switcher;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
