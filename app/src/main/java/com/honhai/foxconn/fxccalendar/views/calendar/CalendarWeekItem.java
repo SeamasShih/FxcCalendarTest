@@ -118,7 +118,7 @@ public class CalendarWeekItem extends View {
 
     private void drawLine(Canvas canvas) {
         canvas.drawLine(0, 0, mWidth, 0, paintLine);
-        if (weekOfMonth == 5)
+        if (weekOfMonth == 1)
             canvas.drawLine(0, mHeight - 1, mWidth, mHeight - 1, paintLine);
     }
 
@@ -246,21 +246,21 @@ public class CalendarWeekItem extends View {
     private void drawWeek(Canvas canvas) {
         canvas.save();
         for (int i = 0; i < 7; i++) {
-            if (i == 5)
+            if (i == 6)
                 paintWeek.setColor(getResources().getColor(R.color.Saturday));
-            else if (i == 6)
+            else if (i == 0)
                 paintWeek.setColor(getResources().getColor(R.color.Sunday));
             else
                 paintWeek.setColor(getResources().getColor(R.color.Weekday));
             switch (weekOfMonth) {
-                case 1:
+                case -1:
                     paintWeek.setAlpha(100);
                     if (weekdays[i] < 10)
                         paintWeek.setAlpha(255);
                     drawDayText(canvas, i);
                     canvas.translate(dayWidth, 0);
                     break;
-                case 5:
+                case 1:
                     paintWeek.setAlpha(255);
                     if (weekdays[i] < 10)
                         paintWeek.setAlpha(100);
@@ -317,9 +317,9 @@ public class CalendarWeekItem extends View {
         int year = this.year;
         int month = this.month;
         Calendar calendar = Calendar.getInstance();
-        if (weekOfMonth == 1 && day > 10)
+        if (weekOfMonth == -1 && day > 10)
             calendar.set(year, month - 1, weekdays[day]);
-        else if (weekOfMonth == 5 && day < 10)
+        else if (weekOfMonth == 1 && day < 10)
             calendar.set(year, month + 1, weekdays[day]);
         else
             calendar.set(year, month, weekdays[day]);

@@ -95,11 +95,11 @@ public class StartActivity extends AppCompatActivity {
         int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
         List<Pager> list = new ArrayList<>();
         calendar.add(Calendar.MONTH, -1);
-        list.add(new Pager(this, calendar, data.events));
+        list.add(new Pager(this, calendar));
         calendar.set(year, month, dayOfMonth);
-        list.add(new Pager(this, calendar, data.events));
+        list.add(new Pager(this, calendar));
         calendar.add(Calendar.MONTH, 1);
-        list.add(new Pager(this, calendar, data.events));
+        list.add(new Pager(this, calendar));
         calendar.set(year, month, dayOfMonth);
         return new Adapter(list);
     }

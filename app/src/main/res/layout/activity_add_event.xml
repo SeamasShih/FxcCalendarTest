@@ -103,7 +103,17 @@
         app:layout_constraintTop_toBottomOf="@id/lineBottomTime"
         app:layout_constraintVertical_weight="5">
 
-        <include layout="@layout/add_event_color_item"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/scrollerContext">
+
+            <include layout="@layout/add_event_color_item"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/eventItemHeight"/>
+
+        </LinearLayout>
 
     </ScrollView>
 

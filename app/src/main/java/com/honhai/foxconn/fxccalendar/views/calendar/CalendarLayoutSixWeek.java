@@ -8,20 +8,18 @@ import android.view.MotionEvent;
 
 import com.honhai.foxconn.fxccalendar.R;
 import com.honhai.foxconn.fxccalendar.activities.StartActivity;
-import com.honhai.foxconn.fxccalendar.data.Event;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 
-public class CalendarLayout extends ConstraintLayout {
+public class CalendarLayoutSixWeek extends ConstraintLayout {
 
     private StartActivity activity;
     private GestureDetector gestureDetector;
-    private CalendarWeekItem w1, w2, w3, w4, w5;
+    private CalendarWeekItem w1, w2, w3, w4, w5,w6;
 
     private float x;
 
-    public CalendarLayout(Context context, AttributeSet attrs) {
+    public CalendarLayoutSixWeek(Context context, AttributeSet attrs) {
         super(context, attrs);
 
         activity = (StartActivity) context;
@@ -35,6 +33,7 @@ public class CalendarLayout extends ConstraintLayout {
         w3 = findViewById(R.id.w3);
         w4 = findViewById(R.id.w4);
         w5 = findViewById(R.id.w5);
+        w6 = findViewById(R.id.w6);
     }
 
     public void setDays(Calendar calendar){
@@ -47,18 +46,21 @@ public class CalendarLayout extends ConstraintLayout {
         w3.setMonday(monthDays[2]);
         w4.setMonday(monthDays[3]);
         w5.setMonday(monthDays[4]);
+        w6.setMonday(monthDays[5]);
         w1.setMonth(year, month);
         w2.setMonth(year, month);
         w3.setMonth(year, month);
         w4.setMonth(year, month);
         w5.setMonth(year, month);
+        w6.setMonth(year, month);
         calendar.set(year, month, 1);
         int week = calendar.get(Calendar.WEEK_OF_YEAR);
         w1.setWeek(-1, week);
         w2.setWeek(0, week + 1);
         w3.setWeek(0, week + 2);
         w4.setWeek(0, week + 3);
-        w5.setWeek(1, week + 4);
+        w5.setWeek(0, week + 4);
+        w6.setWeek(1, week + 5);
         calendar.set(year,month,dayOfMonth);
         Calendar now = Calendar.getInstance();
         int nowYear = now.get(Calendar.YEAR);
@@ -82,6 +84,9 @@ public class CalendarLayout extends ConstraintLayout {
                 case 5:
                     w5.setToday(dayOfWeek-1);
                     break;
+                case 6:
+                    w6.setToday(dayOfWeek-1);
+                    break;
             }
         }
     }
@@ -92,16 +97,16 @@ public class CalendarLayout extends ConstraintLayout {
         int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
         int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
         int weekOfMonth = calendar.get(Calendar.WEEK_OF_MONTH);
-        int[][] r = new int[5][7];
+        int[][] r = new int[6][7];
         for (int i = 0; i < r.length; i++) {
             for (int j = 0; j < r[0].length; j++) {
                 r[i][j] = dayOfMonth - dayOfWeek + j + 1 + (-weekOfMonth + i + 1) * 7;
             }
         }
         int max = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
-        for (int i = 0; i < r[4].length; i++) {
-            if (r[4][i] > max)
-                r[4][i] -= max;
+        for (int i = 0; i < r[0].length; i++) {
+            if (r[5][i] > max)
+                r[5][i] -= max;
         }
         calendar.add(Calendar.MONTH, -1);
         max = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);

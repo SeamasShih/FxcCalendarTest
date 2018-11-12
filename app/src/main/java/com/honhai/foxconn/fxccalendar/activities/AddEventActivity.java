@@ -11,13 +11,15 @@ import android.widget.TextView;
 
 import com.honhai.foxconn.fxccalendar.R;
 import com.honhai.foxconn.fxccalendar.data.Data;
+import com.honhai.foxconn.fxccalendar.views.add.Toolbar;
 
 public class AddEventActivity extends AppCompatActivity {
 
-    int year, month,weekOfMonth, dayOfMonth, hour, minute;
+    int year, month, weekOfMonth, dayOfMonth, hour, minute;
     TextView startWMDY, startHM;
     TextView endWMDY, endHM;
     EditText editText;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,11 +41,16 @@ public class AddEventActivity extends AppCompatActivity {
         findViews();
         setDayText();
         setColor();
+        setToolbar();
+    }
+
+    private void setToolbar() {
+        toolbar.inflateMenu(R.menu.add_event_toolbar_widget);
     }
 
     private void setColor() {
         int color = Data.getInstance().themeColor;
-        editText.setHintTextColor(Color.argb(100,Color.red(color),Color.green(color),Color.blue(color)));
+        editText.setHintTextColor(Color.argb(100, Color.red(color), Color.green(color), Color.blue(color)));
         editText.setTextColor(color);
     }
 
@@ -60,5 +67,6 @@ public class AddEventActivity extends AppCompatActivity {
         endWMDY = findViewById(R.id.endWMDY);
         endHM = findViewById(R.id.endHM);
         editText = findViewById(R.id.edit);
+        toolbar = findViewById(R.id.tool);
     }
 }
