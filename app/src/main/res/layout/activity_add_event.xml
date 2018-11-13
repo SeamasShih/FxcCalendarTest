@@ -110,6 +110,7 @@
             android:id="@+id/scrollerContext">
 
             <include layout="@layout/add_event_color_item"
+                android:id="@+id/colorItem"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/eventItemHeight"/>
 
